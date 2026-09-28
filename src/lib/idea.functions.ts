@@ -41,6 +41,7 @@ export const attachIdea = createServerFn({ method: "POST" })
       const file = decodeDataUrl(value);
       if (file.bytes.byteLength > 10 * 1024 * 1024) throw new Error("Image too large");
       const path = `${data.appointmentId}/${name}.${file.ext}`;
+      if (path.includes('..')) throw new Error("Invalid file path");
       const { error: uploadError } = await supabaseAdmin.storage.from(BUCKET).upload(path, file.bytes, { contentType: file.type, upsert: true });
       if (uploadError) throw new Error(uploadError.message);
       return path;
@@ -80,6 +81,7 @@ export const getIdeaByToken = createServerFn({ method: "GET" })
     if (!row) return null;
     const sign = async (path: string | null): Promise<string | null> => {
       if (!path) return null;
+      if (path.includes('..')) throw new Error("Invalid file path");
       const { data: signed } = await supabaseAdmin.storage.from(BUCKET).createSignedUrl(path, 60 * 60);
       return signed?.signedUrl ?? null;
     };

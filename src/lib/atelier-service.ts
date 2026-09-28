@@ -201,6 +201,9 @@ export async function claimAdmin(): Promise<boolean> {
 }
 
 export async function signIdeaImage(path: string): Promise<string | null> {
+  if (path.includes('..')) {
+    throw new Error('Invalid path');
+  }
   const { data } = await supabase.storage.from("tattoo-ideas").createSignedUrl(path, 60 * 60);
   return data?.signedUrl ?? null;
 }
