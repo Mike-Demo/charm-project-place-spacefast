@@ -423,7 +423,7 @@ export type Database = {
         }[]
       }
       get_booking_status: { Args: { p_id: string }; Returns: string }
-      get_booking_token: { Args: { p_id: string }; Returns: string }
+      get_booking_token: { Args: { p_id: string; p_secret: string }; Returns: string }
       get_confirmed_booking: {
         Args: { p_id: string }
         Returns: {
