@@ -69,7 +69,7 @@ export function initializePaddle(): Promise<void> {
   return initPromise;
 }
 
-export async function openSlotCheckout(options: { appointmentId: string; email: string }): Promise<void> {
+export async function openSlotCheckout(options: { appointmentId: string; email: string; holdSecret: string }): Promise<void> {
   await initializePaddle();
   const paddlePriceId = await resolvePaddlePrice({
     data: { environment: getPaddleEnvironment() },
@@ -80,7 +80,7 @@ export async function openSlotCheckout(options: { appointmentId: string; email: 
     customData: { appointmentId: options.appointmentId },
     settings: {
       displayMode: "overlay",
-      successUrl: `${window.location.origin}/?paid=${options.appointmentId}`,
+      successUrl: `${window.location.origin}/?paid=${options.appointmentId}&s=${encodeURIComponent(options.holdSecret)}`,
       allowLogout: false,
       variant: "one-page",
     },

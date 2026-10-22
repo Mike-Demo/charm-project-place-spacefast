@@ -99,6 +99,13 @@
       "when": 1790383553469,
       "tag": "0013_free_hold_confirm_and_local_time_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792632000000,
+      "tag": "0014_gate_booking_access_token",
+      "breakpoints": true
     }
   ]
 }
